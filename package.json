@@ -1,0 +1,16 @@
+{
+  "name": "webApp",
+  "version": "1.0.0",
+  "description": "The features I will be putting into my exercise app will be:",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.16.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

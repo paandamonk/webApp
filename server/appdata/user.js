@@ -17,6 +17,7 @@ class Exercise{
         this.type = type;
         this.time = time;
         this.duration = duration;
+        this.id = 0;
     }
 }
 
@@ -24,6 +25,7 @@ class Goal{
     constructor(type, value){
         this.type = type;
         this.value = value;
+        this.id = 0;
     }
 }
 

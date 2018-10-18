@@ -13,5 +13,5 @@ app.use('/users', users);
 
 
 app.listen(port);
-
+// eslint-disable-next-line no-console
 console.log(`listening on: http://${server}:${port}`);

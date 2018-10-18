@@ -6,13 +6,14 @@ app.use(express.json());
 
 var users = new Users();
 var mainuser = new User();
-const userlistx = [
-    {username:'jimleh', password:'justlikebutta'}
-];
-users.userlist = userlistx;
+//var testuser = new User("",  "");
+let userlistx = [];
+//users.userlist.push(testuser);
+//userlistx.push(testuser.username);
+
 
 app.get('/', (req, res) => {
-    res.send(userlistx);
+    res.send(users.userlist);
 });
 
 app.post('/', (req, res) => {
@@ -22,40 +23,49 @@ app.post('/', (req, res) => {
       return;
   }
     const user = new User(req.body.username, req.body.password);
-    userlistx.push(user);
-    res.send(user.username + " " + user.password);
+    users.userlist.push(user);
+    userlistx.push(user.username);
+    res.send(user);
+});
+
+
+app.get('/:username/goals', (req, res) => {
+    mainuser = users.userlist.find(c => c.username === req.params.username);
+    res.send(mainuser.goals);
+});
+app.post('/:username/goals', (req, res) => {
+    const goal = new Goal(req.body.type, req.body.value);
+    mainuser = users.userlist.find(c => c.username === req.params.username);
+    goal.id = mainuser.goals.length + 1;
+    mainuser.goals.push(goal);
+    res.send(mainuser.goals);
+});
+app.get('/:username/goals/:id',(req, res) =>{
+    mainuser = users.userlist.find(c => c.username === req.params.username);
+    res.send(mainuser.goals[parseInt(req.params.id)-1]);
+});
+
+app.get('/:username/exercises', (req, res) => {
+    mainuser = users.userlist.find(c => c.username === req.params.username);
+    res.send(mainuser.exercises);
+});
+
+app.post('/:username/exercises', (req, res) => {
+    const exercise = new Exercise(req.body.type, req.body.time, req.body.duration);
+    mainuser = users.userlist.find(c => c.username === req.params.username);
+    exercise.id = mainuser.exercises.length + 1;
+    mainuser.exercises.push(exercise);
+    res.send(mainuser.exercises);
+});
+app.get('/:username/exercises/:id',(req, res) =>{
+    mainuser = users.userlist.find(c => c.username === req.params.username);
+    res.send(mainuser.exercises[parseInt(req.params.id)-1]);
 });
 app.get('/:username/friends', (req, res) => {
     mainuser = userlistx.find(c => c.username === req.params.username);
     if (!mainuser) res.status(404).send('The username does not exist.');
     res.send(mainuser.friends);
 });
-
-app.get('/:username/goals', (req, res) => {
-    mainuser = userlistx.find(c => c.username === req.params.username);
-    res.send(mainuser.goals);
-});
-app.post('/:username/goals', (req, res) => {
-    const goal = new Goal(req.body.type, req.body.value);
-    mainuser = userlistx.find(c => c.username === req.params.username);
-    mainuser.goals.push(goal);
-    res.send(mainuser.goals);
-
-});
-
-app.get('/:username/exercises', (req, res) => {
-    mainuser = userlistx.find(c => c.username === req.params.username);
-    res.send(mainuser.exercises);
-});
-
-app.post('/:username/exercises', (req, res) => {
-    const exercise = new Exercise(req.body.type, req.body.time, req.body.duration);
-    mainuser = userlistx.find(c => c.username === req.params.username);
-    mainuser.exercises.push(exercise);
-    res.send(mainuser.exercises);
-
-});
-
 app.post('/:username/friends', (req, res) => {
     const friend = userlistx.find(c => c.username === req.body.username);
     if (!friend) res.status(404).send('The username does not exist.');
@@ -67,10 +77,10 @@ app.post('/:username/friends', (req, res) => {
 });
 
 app.get('/:username', (req, res) => {
-    mainuser = new User();
-    const user = userlistx.find(c => c.username === req.params.username);
-    if (!user) res.status(404).send('The username does not exist.');
-    res.send(user.username);
+    //mainuser = new User();
+    mainuser = users.userlist.find(c => c.username === req.params.username);
+    if (!mainuser) res.status(404).send('The username does not exist.');
+    res.send(mainuser);
 });
 
 app.put('/:username', (req, res) => {
@@ -87,7 +97,7 @@ app.put('/:username', (req, res) => {
 });
 
 app.put('/:password', (req, res) => {
-    mainuser = users.find(c => c.password === req.params.password);
+    mainuser = users.userlist.find(c => c.password === req.params.password);
     if (!mainuser) res.status(404).send('The username does not exist.');
       const { error } = validateUser(req.body);
       if (error){
@@ -104,6 +114,6 @@ function validateUser(user){
         password:  Joi.string().min(10).required()
       };
       return Joi.validate(user, schema);
-};
+}
 
 module.exports = app;

@@ -4,7 +4,8 @@
   "description": "The features I will be putting into my exercise app will be:",
   "main": "index.js",
   "dependencies": {
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "joi": "^14.0.0"
   },
   "devDependencies": {},
   "scripts": {

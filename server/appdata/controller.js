@@ -7,13 +7,13 @@ app.use(express.json());
 var users = new Users();
 var mainuser = new User();
 //var testuser = new User("",  "");
-let userlistx = [];
+let userlistx = [{username:'jimmy', password:'jimmypassword'}];
 //users.userlist.push(testuser);
 //userlistx.push(testuser.username);
 
 
 app.get('/', (req, res) => {
-    res.send(users.userlist);
+    res.send(userlistx);
 });
 
 app.post('/', (req, res) => {
@@ -72,17 +72,13 @@ app.post('/:username/friends', (req, res) => {
     mainuser = userlistx.find(c => c.username === req.params.username);
     mainuser.friends.push(friend);
     res.send(mainuser.friends);
-
-    
 });
-
 app.get('/:username', (req, res) => {
     //mainuser = new User();
     mainuser = users.userlist.find(c => c.username === req.params.username);
     if (!mainuser) res.status(404).send('The username does not exist.');
     res.send(mainuser);
 });
-
 app.put('/:username', (req, res) => {
     mainuser = users.userlist.find(c => c.username === req.params.username);
     if (!mainuser) res.status(404).send('The username does not exist.');
@@ -95,7 +91,6 @@ app.put('/:username', (req, res) => {
     mainuser.username = req.body.username;
     res.send(mainuser);
 });
-
 app.put('/:password', (req, res) => {
     mainuser = users.userlist.find(c => c.password === req.params.password);
     if (!mainuser) res.status(404).send('The username does not exist.');
@@ -107,7 +102,6 @@ app.put('/:password', (req, res) => {
     mainuser.password = req.body.password;
     res.send(mainuser);
 });
-
 function validateUser(user){
     const schema = {
         username: Joi.string().min(4).required(),
@@ -115,5 +109,4 @@ function validateUser(user){
       };
       return Joi.validate(user, schema);
 }
-
 module.exports = app;

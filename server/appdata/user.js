@@ -4,12 +4,12 @@ class Users{
     }
 }
 class User{
-    constructor(username, id){
+    constructor(username, userId){
         this.username = username;
         this.exercises = [];
         this.goals = [];
         this.friends = [];
-        this.id = id;
+        this.userId = userId;
     }
 }
 class Exercise{

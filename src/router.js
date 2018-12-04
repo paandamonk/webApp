@@ -28,8 +28,13 @@ export default new Router({
     },
     {
       path: '/page',
-      name: 'Profile',
+      name: 'Add',
       component: () => import('./views/Page.vue')
+    },
+    {
+      path: '/friends',
+      name: 'Friends',
+       component: () => import('./views/Friends.vue')
     }
   ]
 })

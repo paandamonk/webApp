@@ -22,13 +22,14 @@ app.post('/', (req, res) => {
       res.status(400).send(error.details[0].message);
       return;
   }*/
-    var user = users.userlist.find(c => c.id == req.body.id);
+   // var userlist = new Users();
+    var user = users.userlist.find(c => c.userId == req.body.userId);
     if(!user){
-        user = new User(req.body.username, req.body.id);
-    users.userlist.push(user);
-    if(mainuser === null){
-        mainuser = user;
-    }
+        user = new User(req.body.username, req.body.userId);
+        users.userlist.push(user);
+        if(mainuser === null){
+            mainuser = user;
+        }
     res.send(user);
     }
     else{
@@ -42,58 +43,71 @@ app.get('/mainuser', (req, res) => {
 });
 
 
-app.get('/:username/goals', (req, res) => {
-    mainuser = users.userlist.find(c => c.username === req.params.username);
+app.get('/:userId/goals', (req, res) => {
+    mainuser = users.userlist.find(c => c.userId === req.params.userId);
+    if (!mainuser) res.status(404).send('The username does not exist.');
     res.send(mainuser.goals);
 });
-app.post('/:username/goals', (req, res) => {
+app.post('/:userId/goals', (req, res) => {
     const goal = new Goal(req.body.type, req.body.value);
-    mainuser = users.userlist.find(c => c.username === req.params.username);
+    mainuser = users.userlist.find(c => c.userId === req.params.userId);
+    if (!mainuser) res.status(404).send('The username does not exist.');
     goal.id = mainuser.goals.length + 1;
     mainuser.goals.push(goal);
     res.send(mainuser.goals);
 });
-app.get('/:username/goals/:id',(req, res) =>{
-    mainuser = users.userlist.find(c => c.username === req.params.username);
+app.get('/:userId/goals/:id',(req, res) =>{
+    mainuser = users.userlist.find(c => c.userId === req.params.userId);
+    if (!mainuser) res.status(404).send('The username does not exist.');
     res.send(mainuser.goals[parseInt(req.params.id)-1]);
 });
 
-app.get('/:username/exercises', (req, res) => {
-    mainuser = users.userlist.find(c => c.username === req.params.username);
+app.get('/:userId/exercises', (req, res) => {
+    mainuser = users.userlist.find(c => c.userId === req.params.userId);
+    if (!mainuser) res.status(404).send('The username does not exist.');
     res.send(mainuser.exercises);
 });
 
-app.post('/:username/exercises', (req, res) => {
+app.post('/:userId/exercises', (req, res) => {
     const exercise = new Exercise(req.body.type, req.body.time, req.body.duration);
    // mainuser = users.userlist.find(c => c.username === req.params.username);
     exercise.id = mainuser.exercises.length + 1;
     mainuser.exercises.push(exercise);
     res.send(mainuser.exercises);
 });
-app.get('/:username/exercises/:id',(req, res) =>{
-    mainuser = users.userlist.find(c => c.username === req.params.username);
+app.get('/:userId/exercises/:id',(req, res) =>{
+    mainuser = users.userlist.find(c => c.userId === req.params.userId);
+    if (!mainuser) res.status(404).send('The username does not exist.');
     res.send(mainuser.exercises[parseInt(req.params.id)-1]);
 });
-app.get('/:username/friends', (req, res) => {
-    mainuser = users.userlist.find(c => c.username === req.params.username);
+app.get('/:userId/friends', (req, res) => {
+    mainuser = users.userlist.find(c => c.userId === req.params.userId);
     if (!mainuser) res.status(404).send('The username does not exist.');
     res.send(mainuser.friends);
 });
-app.post('/:username/friends', (req, res) => {
+app.get('/:userId/friends/:id', (req, res) => {
+
+    mainuser = users.userlist.find(c => c.userId === req.params.userId);
+    if (!mainuser) res.status(404).send('The username does not exist.');
+    res.send(mainuser.friends);
+});
+app.post('/:userId/friends', (req, res) => {
     const friend = users.userlist.find(c => c.username === req.body.username);
     if (!friend) res.status(404).send('The username does not exist.');
-    mainuser = users.userlist.find(c => c.username === req.params.username);
+    mainuser = users.userlist.find(c => c.userId === req.params.userId);
+    const test = mainuser.friends.find(c => c.username === req.body.username);
+    if(test===friend) res.status(404).send('User already a friend.');
     mainuser.friends.push(friend);
     res.send(mainuser.friends);
 });
-app.get('/:username', (req, res) => {
+app.get('/:userId', (req, res) => {
     //mainuser = new User();
-    mainuser = users.userlist.find(c => c.username === req.params.username);
+    mainuser = users.userlist.find(c => c.userId === req.params.userId);
     if (!mainuser) res.status(404).send('The username does not exist.');
     res.send(mainuser);
 });
-app.put('/:username', (req, res) => {  //changing username
-    mainuser = users.userlist.find(c => c.username === req.params.username);
+app.put('/:userId', (req, res) => {  //changing username
+    mainuser = users.userlist.find(c => c.userId === req.params.userId);
     if (!mainuser) res.status(404).send('The username does not exist.');
 
       const { error } = validateUser(req.body);

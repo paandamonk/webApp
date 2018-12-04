@@ -5,6 +5,7 @@
       Big Gains 
     </div>
     <Nav />
+    <Nav2 />
     <router-view/>
   </div>
 </template>
@@ -16,13 +17,14 @@
 
 <script>
 // @ is an alias to /src
-import Nav from '@/components/Nav.vue'
+import Nav from '@/components/Nav.vue';
+import Nav2 from '@/components/Nav2.vue';
 import '@/services/facebook';
 
 export default {
   name: 'home',
   components: {
     Nav
-  }
+    }
 }
 </script>

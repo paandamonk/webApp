@@ -22,6 +22,8 @@
     <input type="text" class="form-control" id="duration" placeholder="Enter duration of exercise" v-model="exercise.duration">
   </div>
     <button @click.prevent="addExercise()">Submit</button>
+    <p>{{exercises}}</p>
+
 </form>
 <form>
   <div class="form-group">
@@ -33,8 +35,11 @@
     <input type="text" class="form-control" id="value" placeholder="Enter the value of the goal (ex. 145 lbs)" v-model="goal.value">
   </div>
     <button @click.prevent="addGoal()">Submit</button>
+        <p>{{goals}}</p>
+
 </form>
-  </div>
+    
+</div>
 
 </div>
 
@@ -58,33 +63,33 @@ export default {
             username: '',
             goals: [],
             exercises: [],
+            user: null
+
         }
     },
     methods: {
         addExercise(){
-            if(api.getCurrentUser() !== null){
-                api.getCurrentUser()
-            .then((response) => {
-                this.username = response.username;
-            });
-            api.addExercise(this.username, this.exercise.type, this.exercise.time, this.exercise.duration);
+            this.getCurrent();
+            api.addExercise(this.user.username, this.exercise.type, this.exercise.time, this.exercise.duration);
             this.exercises.push(this.exercise);
-            this.exercise.type = '',
-            this.exercise.time = '',
-            this.exercise.duration = ''
-            }
+            this.exercises = this.user.exercises;
+            
     
         },
         addGoal(){
-            api.getCurrentUser()
-            .then((response) => {
-                this.username = response.username;
-            });
-            api.addGoal(this.username, this.goal.type, this.goal.value);
+            this.getCurrent();
+            api.addGoal(this.user.username, this.goal.type, this.goal.value);
             this.goals.push(this.goal);
             this.goal.type = '',
             this.goal.value = ''
+        },
+        getCurrent(){
+            api.getCurrentUser()
+            .then((response) => {
+                this.user = response;
+                this.username = response.username;
+            });
         }
-    },
+    }
 }
 </script>

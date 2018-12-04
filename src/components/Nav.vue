@@ -1,4 +1,5 @@
 <template>
+<div>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <ul class="navbar-nav">
             <li class="nav-item">
@@ -13,6 +14,11 @@
             <li class="nav-item">
                 <router-link class="nav-link" exact-active-class="active" to="/page">Profile</router-link>
             </li>
+            <li class="nav-item">
+                <router-link class="nav-link" exact-active-class="active" to="/friends">Friends</router-link>
+            </li>
         </ul>
+        
     </nav>
+</div>
 </template>

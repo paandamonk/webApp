@@ -16,7 +16,8 @@
     "popper.js": "^1.14.6",
     "v-model": "0.0.8",
     "vue": "^2.5.17",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vue-select": "^2.5.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.5",

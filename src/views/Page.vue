@@ -70,7 +70,7 @@ export default {
     methods: {
         addExercise(){
             this.getCurrent();
-            api.addExercise(this.user.username, this.exercise.type, this.exercise.time, this.exercise.duration);
+            api.addExercise(api.userId, this.exercise.type, this.exercise.time, this.exercise.duration);
             this.exercises.push(this.exercise);
             this.exercises = this.user.exercises;
             
@@ -78,18 +78,18 @@ export default {
         },
         addGoal(){
             this.getCurrent();
-            api.addGoal(this.user.username, this.goal.type, this.goal.value);
+            api.addGoal(api.userId, this.goal.type, this.goal.value);
             this.goals.push(this.goal);
-            this.goal.type = '',
-            this.goal.value = ''
+            this.goals = this.user.goals;
         },
         getCurrent(){
             api.getCurrentUser()
             .then((response) => {
                 this.user = response;
-                this.username = response.username;
+                this.Id = response.userId;
             });
-        }
+        },
+       userId: ()=> api.userId
     }
 }
 </script>

@@ -41,6 +41,15 @@ app.post('/', (req, res) => {
 app.get('/mainuser', (req, res) => {
     res.send(mainuser);
 });
+app.get('/mainuser/goals', (req, res) => {
+    res.send(mainuser.goals);
+});
+app.get('/mainuser/exercises', (req, res) => {
+    res.send(mainuser.exercises);
+});
+app.get('/mainuser/friends', (req, res) => {
+    res.send(mainuser.friends);
+});
 
 
 app.get('/:userId/goals', (req, res) => {

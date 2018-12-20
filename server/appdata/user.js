@@ -10,6 +10,7 @@ class User{
         this.goals = [];
         this.friends = [];
         this.userId = userId;
+    
     }
 }
 class Exercise{

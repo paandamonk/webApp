@@ -28,7 +28,13 @@ export function addFriend(userId, friendUser){
     return myFetch(api_root + "/" + userId + "/friends", {username: friendUser});
 }
 export function getFriends(){
-    return myFetch(api_root + "/mainuser" + "/friends");
+    return myFetch(api_root + "/" + userId + "/friends");
+}
+export function getExercises(){
+    return myFetch(api_root + "/" + userId + "/exercises");
+}
+export function getGoals(){
+    return myFetch(api_root + "/" + userId + "/goals");
 }
 export function GetState(){
     return myFetch(api_root + "/");

@@ -17,6 +17,9 @@
             <li class="nav-item">
                 <router-link class="nav-link" exact-active-class="active" to="/friends">Friends</router-link>
             </li>
+            <li class="nav-item">
+                <router-link class="nav-link" exact-active-class="active" to="/auto">Auto</router-link>
+            </li>
         </ul>
         
     </nav>

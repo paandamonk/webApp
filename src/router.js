@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
-
+import vSelect from 'vue-select'
+Vue.component('v-select', vSelect)
 Vue.use(Router)
 
 export default new Router({
@@ -35,6 +36,11 @@ export default new Router({
       path: '/friends',
       name: 'Friends',
        component: () => import('./views/Friends.vue')
+    },
+    {
+      path: '/auto',
+      name: 'AutoComplete',
+      component: () => import('./views/Autocomplete.vue')
     }
   ]
 })
